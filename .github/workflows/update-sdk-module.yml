@@ -1,0 +1,45 @@
+name: Update SDK Submodule
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: write
+
+jobs:
+  update-sdk:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout open.mp-test
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+          token: ${{ secrets.CI_TOKEN }}
+
+      - name: Update SDK
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git submodule sync --recursive
+          git submodule update --init --recursive
+
+          cd SDK
+
+          git remote set-url origin https://github.com/Tamerti/open.mp-sdk-test.git
+          git checkout master
+          git pull origin master
+
+          cd ..
+
+          git add SDK
+
+          git diff --cached --quiet || git commit -m "Update SDK submodule"
+
+          git push
