@@ -24,7 +24,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           clean: true
-          repository: "Tamerti/open.mp-sdk-test"
+          repository: "Tamerti/open.mp-sdk"
           path: "SDK"
           ref: "master"
           submodules: recursive
