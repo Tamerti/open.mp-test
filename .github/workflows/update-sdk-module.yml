@@ -14,32 +14,31 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout open.mp-test
+      - name: Checkout repository
         uses: actions/checkout@v4
         with:
           submodules: recursive
           fetch-depth: 0
           token: ${{ secrets.CI_TOKEN }}
 
-      - name: Update SDK
-        shell: bash
+      - name: Configure Git
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
+      - name: Update SDK to latest master
+        run: |
           git submodule sync --recursive
-          git submodule update --init --recursive
+          git submodule update --init --remote SDK
 
-          cd SDK
-
-          git remote set-url origin https://github.com/Tamerti/open.mp-sdk-test.git
-          git checkout master
-          git pull origin master
-
-          cd ..
-
+      - name: Commit if SDK changed
+        run: |
           git add SDK
 
-          git diff --cached --quiet || git commit -m "Update SDK submodule"
+          if git diff --cached --quiet; then
+            echo "SDK is already up to date."
+            exit 0
+          fi
 
-          git push
+          git commit -m "Update SDK submodule"
+          git push origin HEAD:master
