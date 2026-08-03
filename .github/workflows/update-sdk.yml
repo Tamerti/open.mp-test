@@ -31,10 +31,13 @@ jobs:
           token: ${{ secrets.CI_TOKEN }}
 
 
-      - name: Update SDK files from open.mp dev branch
+      - name: Update SDK from open.mp dev branch
         shell: bash
         run: |
           cd SDK
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
           git remote add upstream https://github.com/openmultiplayer/open.mp-sdk.git || true
 
@@ -42,7 +45,7 @@ jobs:
 
           git checkout master
 
-          git rebase upstream/dev
+          git merge upstream/dev --no-edit
 
           git push origin master
 
@@ -65,13 +68,18 @@ jobs:
           token: ${{ secrets.CI_TOKEN }}
 
 
-      - name: Update Network files from dev branch
+      - name: Update Network from dev branch
         shell: bash
         run: |
           cd Network
 
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
           git fetch origin
 
-          git rebase origin/dev
+          git checkout master
 
-          git push || true
+          git merge origin/dev --no-edit
+
+          git push origin master
