@@ -19,6 +19,7 @@
 [submodule "SDK"]
 	path = SDK
 	url = https://github.com/Tamerti/open.mp-sdk-test
+    branch = master
 [submodule "Shared/Network"]
 	path = Shared/Network
 	url = https://github.com/openmultiplayer/open.mp-network
