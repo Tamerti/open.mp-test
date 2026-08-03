@@ -40,11 +40,41 @@ jobs:
         arch: [Win32, x64]
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout source
+        uses: actions/checkout@v4
         with:
           clean: true
           submodules: recursive
           fetch-depth: 0
+          token: ${{ secrets.CI_TOKEN }}
+
+      - name: Force SDK fork
+        shell: bash
+        run: |
+          git submodule sync --recursive
+
+          if [ -d "SDK/.git" ] || [ -f "SDK/.git" ]; then
+            cd SDK
+
+            git remote set-url origin https://github.com/Tamerti/open.mp-sdk-test.git
+            git fetch origin
+
+            git checkout master
+            git pull origin master
+
+            echo "=========================="
+            echo "SDK Remote"
+            git remote -v
+            echo "=========================="
+            echo "SDK Commit"
+            git rev-parse HEAD
+            echo "=========================="
+
+            cd ..
+          else
+            echo "SDK submodule missing!"
+            exit 1
+          fi
 
       - name: Declare build output variables
         id: vars
@@ -130,11 +160,41 @@ jobs:
         ssl: [dynamic, static]
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout source
+        uses: actions/checkout@v4
         with:
           clean: true
           submodules: recursive
           fetch-depth: 0
+          token: ${{ secrets.CI_TOKEN }}
+
+      - name: Force SDK fork
+        shell: bash
+        run: |
+          git submodule sync --recursive
+
+          if [ -d "SDK/.git" ] || [ -f "SDK/.git" ]; then
+            cd SDK
+
+            git remote set-url origin https://github.com/Tamerti/open.mp-sdk-test.git
+            git fetch origin
+
+            git checkout master
+            git pull origin master
+
+            echo "=========================="
+            echo "SDK Remote"
+            git remote -v
+            echo "=========================="
+            echo "SDK Commit"
+            git rev-parse HEAD
+            echo "=========================="
+
+            cd ..
+          else
+            echo "SDK submodule missing!"
+            exit 1
+          fi
 
       - name: Declare build output variables
         id: vars
@@ -203,11 +263,41 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout source
+        uses: actions/checkout@v4
         with:
           clean: true
           submodules: recursive
           fetch-depth: 0
+          token: ${{ secrets.CI_TOKEN }}
+
+      - name: Force SDK fork
+        shell: bash
+        run: |
+          git submodule sync --recursive
+
+          if [ -d "SDK/.git" ] || [ -f "SDK/.git" ]; then
+            cd SDK
+
+            git remote set-url origin https://github.com/Tamerti/open.mp-sdk-test.git
+            git fetch origin
+
+            git checkout master
+            git pull origin master
+
+            echo "=========================="
+            echo "SDK Remote"
+            git remote -v
+            echo "=========================="
+            echo "SDK Commit"
+            git rev-parse HEAD
+            echo "=========================="
+
+            cd ..
+          else
+            echo "SDK submodule missing!"
+            exit 1
+          fi
 
       - name: Declare build variables
         id: vars
@@ -241,11 +331,41 @@ jobs:
         ssl: [dynamic, static]
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout source
+        uses: actions/checkout@v4
         with:
           clean: true
           submodules: recursive
           fetch-depth: 0
+          token: ${{ secrets.CI_TOKEN }}
+
+      - name: Force SDK fork
+        shell: bash
+        run: |
+          git submodule sync --recursive
+
+          if [ -d "SDK/.git" ] || [ -f "SDK/.git" ]; then
+            cd SDK
+
+            git remote set-url origin https://github.com/Tamerti/open.mp-sdk-test.git
+            git fetch origin
+
+            git checkout master
+            git pull origin master
+
+            echo "=========================="
+            echo "SDK Remote"
+            git remote -v
+            echo "=========================="
+            echo "SDK Commit"
+            git rev-parse HEAD
+            echo "=========================="
+
+            cd ..
+          else
+            echo "SDK submodule missing!"
+            exit 1
+          fi
 
       - name: Declare build output variables
         id: vars
@@ -312,11 +432,41 @@ jobs:
         ssl: [dynamic, static]
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout source
+        uses: actions/checkout@v4
         with:
           clean: true
           submodules: recursive
           fetch-depth: 0
+          token: ${{ secrets.CI_TOKEN }}
+
+      - name: Force SDK fork
+        shell: bash
+        run: |
+          git submodule sync --recursive
+
+          if [ -d "SDK/.git" ] || [ -f "SDK/.git" ]; then
+            cd SDK
+
+            git remote set-url origin https://github.com/Tamerti/open.mp-sdk-test.git
+            git fetch origin
+
+            git checkout master
+            git pull origin master
+
+            echo "=========================="
+            echo "SDK Remote"
+            git remote -v
+            echo "=========================="
+            echo "SDK Commit"
+            git rev-parse HEAD
+            echo "=========================="
+
+            cd ..
+          else
+            echo "SDK submodule missing!"
+            exit 1
+          fi
 
       - name: Declare build output variables
         id: vars
