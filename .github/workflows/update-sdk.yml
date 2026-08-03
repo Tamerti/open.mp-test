@@ -31,7 +31,7 @@ jobs:
           token: ${{ secrets.CI_TOKEN }}
 
 
-      - name: Push SDK changes
+      - name: Sync SDK fork
         shell: bash
         run: |
           cd SDK
@@ -61,18 +61,15 @@ jobs:
           path: "Network"
           ref: "master"
           submodules: recursive
-          token: ${{ secrets.CI_TOKEN }}
 
 
-      - name: Update Network
+      - name: Sync Network source
         shell: bash
         run: |
           cd Network
 
-          git fetch origin
-
           git checkout master
 
-          git pull origin master
+          git fetch origin
 
-          git push origin master
+          git pull origin master
