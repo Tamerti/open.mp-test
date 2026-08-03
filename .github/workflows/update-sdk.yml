@@ -1,38 +1,61 @@
 name: Update SDK & Network
+
 on:
   workflow_dispatch:
+
   push:
     branches:
       - "stable"
+
+
+permissions:
+  contents: write
+
+
 jobs:
+
   update-sdk:
+
     runs-on: ubuntu-latest
 
     steps:
-      - name: Clone SDK repository
-        uses: actions/checkout@v3
+
+      - name: Clone SDK fork repository
+        uses: actions/checkout@v4
         with:
           clean: true
-          repository: "openmultiplayer/open.mp-sdk"
+          repository: "Tamerti/open.mp-sdk-test"
           path: "SDK"
           ref: "master"
           submodules: recursive
           token: ${{ secrets.CI_TOKEN }}
 
-      - name: Update SDK files from dev branch
-        if: always()
+
+      - name: Update SDK files from open.mp dev branch
         shell: bash
         run: |
           cd SDK
-          git fetch
-          git rebase origin/dev
-          git push || true
+
+          git remote add upstream https://github.com/openmultiplayer/open.mp-sdk.git || true
+
+          git fetch upstream
+
+          git checkout master
+
+          git rebase upstream/dev
+
+          git push origin master
+
+
 
   update-network:
+
     runs-on: ubuntu-latest
+
     steps:
-      - name: Clone Network repository
-        uses: actions/checkout@v3
+
+      - name: Clone open.mp Network repository
+        uses: actions/checkout@v4
         with:
           clean: true
           repository: "openmultiplayer/open.mp-network"
@@ -41,11 +64,14 @@ jobs:
           submodules: recursive
           token: ${{ secrets.CI_TOKEN }}
 
+
       - name: Update Network files from dev branch
-        if: always()
         shell: bash
         run: |
           cd Network
-          git fetch
+
+          git fetch origin
+
           git rebase origin/dev
+
           git push || true
